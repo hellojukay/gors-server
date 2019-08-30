@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"time"
 
 	"flag"
 
@@ -40,6 +41,9 @@ func main() {
 		}
 
 		filename := filepath.Base(file.Filename)
+		dir := filepath.Join(cf.Data.Dir, fmt.Sprintf("%d", time.Now().Unix()))
+		os.MkdirAll(dir, 0733)
+		filename = filepath.Join(dir, filename)
 		if err := c.SaveUploadedFile(file, filename); err != nil {
 			c.String(http.StatusBadRequest, fmt.Sprintf("upload file err: %s", err.Error()))
 			return
