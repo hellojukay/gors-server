@@ -16,7 +16,7 @@ var filename string
 var cf *config.Config
 
 func init() {
-	flag.StringVar(&filename, "config", "./config.ini", "config file")
+	flag.StringVar(&filename, "config", "./config.json", "config file")
 	if !flag.Parsed() {
 		flag.Parse()
 	}
@@ -47,5 +47,5 @@ func main() {
 
 		c.String(http.StatusOK, fmt.Sprintf("File %s uploaded successfully.", file.Filename))
 	})
-	router.Run() // listen and serve on 0.0.0.0:8080
+	router.Run(fmt.Sprintf(":%d", cf.Server.Port)) // listen and serve on 0.0.0.0:8080
 }
