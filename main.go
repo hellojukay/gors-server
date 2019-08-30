@@ -6,7 +6,10 @@ import (
 	"path/filepath"
 
 	"github.com/gin-gonic/gin"
+	"github.com/hellojukay/gors-server/config"
 )
+
+var config = config.LoadConfig("")
 
 func main() {
 	router := gin.Default()
