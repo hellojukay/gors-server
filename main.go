@@ -5,19 +5,22 @@ import (
 	"net/http"
 	"path/filepath"
 
+	"flag"
+
 	"github.com/gin-gonic/gin"
 	"github.com/hellojukay/gors-server/config"
 )
 
-var config = config.LoadConfig("")
+func init() {
+	if !flag.Parsed() {
+		flag.Parse()
+	}
+}
+
+var c = config.LoadConfig("", nil)
 
 func main() {
 	router := gin.Default()
-	router.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
 	router.MaxMultipartMemory = 100 << 20 // 100 MiB
 	router.POST("/upload", func(c *gin.Context) {
 		// Source
