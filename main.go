@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"path/filepath"
 
 	"flag"
@@ -11,13 +12,21 @@ import (
 	"github.com/hellojukay/gors-server/config"
 )
 
+var filename string
+var cf *config.Config
+
 func init() {
+	flag.StringVar(&filename, "config", "./config.ini", "config file")
 	if !flag.Parsed() {
 		flag.Parse()
 	}
+	c, err := config.LoadConfig(filename)
+	if err != nil {
+		fmt.Printf("parse config error : %s ", err)
+		os.Exit(1)
+	}
+	cf = c
 }
-
-var c = config.LoadConfig("", nil)
 
 func main() {
 	router := gin.Default()
