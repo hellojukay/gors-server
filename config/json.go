@@ -6,22 +6,23 @@ import (
 	"os"
 )
 
+var C *Config = &Config{}
+
 // LoadConfig 加载配置文件文件
-func LoadConfig(path string) (*Config, error) {
+func LoadConfig(path string) error {
 	file, err := os.Open(path)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	content, err := ioutil.ReadAll(file)
 	if err != nil {
-		return nil, err
+		return err
 	}
-	c := &Config{}
-	err = json.Unmarshal(content, c)
+	err = json.Unmarshal(content, C)
 	if err != nil {
-		return nil, err
+		return err
 	}
-	return c, nil
+	return nil
 }
 
 type Config struct {

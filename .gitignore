@@ -1,3 +1,5 @@
 gors-server
 config.json
 data
+gors.db
+gors*
